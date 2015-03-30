@@ -38,6 +38,7 @@ public class IngresaVehiculo extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1366, 768));
 
         jLabel1.setFont(new java.awt.Font("High Tower Text", 0, 24)); // NOI18N
         jLabel1.setText("Parqueo ");
@@ -83,7 +84,7 @@ public class IngresaVehiculo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))))
-                .addGap(0, 207, Short.MAX_VALUE))
+                .addGap(0, 361, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addComponent(jLabel1)

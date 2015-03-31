@@ -10,7 +10,6 @@ package Clases;
  * @author alralaos
  */
 public class MainXML {
-
     /**
      * @param args the command line arguments
      */
@@ -19,5 +18,4 @@ public class MainXML {
         XML prueba=new XML();
         prueba.escribirXML("LADUGO", "3-101-536894", "00000");
     }
-    
 }

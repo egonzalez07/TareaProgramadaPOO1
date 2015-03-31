@@ -27,23 +27,20 @@ public class XML {
     public XML(java.io.File archivoXML){        
     }
     XML() {}
-    public void leerXML(){
+    public String leernombre(){
+        String pNombre="";
         try {
             //Cargo el archivo
             JespXML archivo = new JespXML("info.xml");
             //leo el archivo y me retorna el tag raiz, que en este caso
-            // es biblioteca
+            // es empresa
             Tag empresa = archivo.leerXML();
             //Obtengo los tags que necesito, por el nombre
             Tag nombre = empresa.getTagHijoByName("nombre");
-            Tag cedula = empresa.getTagHijoByName("cedula");
-            Tag consecutivo = empresa.getTagHijoByName("consecutivo");
-            //puedo obtener los valores de los atributos de un tag especÃ­fico
-            String paginas = empresa.getValorDeAtributo("paginas");
-            //imprimo la informaciÃ³n requerida
-            System.out.println("Nombre: "+nombre);
-            System.out.println("cedula: "+cedula.getContenido());
-            System.out.println("consecutivo: "+consecutivo.getContenido());
+            
+            //puedo obtener los valores de los atributos de un tag especifico
+            pNombre = empresa.getValorDeAtributo("nombre");
+            System.out.println("Nombre: "+pNombre);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -55,16 +52,71 @@ public class XML {
         } catch (AtributoNotFoundException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return pNombre;
+    }
+    public String leercedula(){
+        String pCedula="";
+        try {
+            //Cargo el archivo
+            JespXML archivo = new JespXML("info.xml");
+            //leo el archivo y me retorna el tag raiz, que en este caso
+            // es empresa
+            Tag empresa = archivo.leerXML();
+            //Obtengo los tags que necesito, por el nombre
+            Tag cedula = empresa.getTagHijoByName("cedula");
+            //puedo obtener los valores de los atributos de un tag especifico
+            pCedula = empresa.getValorDeAtributo("cedula");
+            //imprimo la informaciÃ³n requerida
+            System.out.println("cedula: "+pCedula);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TagHijoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AtributoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pCedula;
+    }
+    public String leerconsecutivo(){
+        String pConsecutivo="";
+        try {
+            //Cargo el archivo
+            JespXML archivo = new JespXML("info.xml");
+            //leo el archivo y me retorna el tag raiz, que en este caso
+            // es empresa
+            Tag empresa = archivo.leerXML();
+            //Obtengo los tags que necesito, por el nombre
+            Tag consecutivo = empresa.getTagHijoByName("consecutivo");
+            //puedo obtener los valores de los atributos de un tag especifico
+            pConsecutivo = empresa.getValorDeAtributo("consecutivo");
+            //imprimo la informaciÃ³n requerida
+            System.out.println("consecutivo: "+pConsecutivo);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TagHijoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AtributoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pConsecutivo;
     }
     //declaro el Tag raiz, que en esta caso se llama raiz
-    public Tag raiz = new Tag("raiz");
-    public void escribirXML(String pNombre, String pCedula, String pConsecutivo){
+    public Tag raizEmpresa = new Tag("info");
+    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo){
         try {
             //creo el objeto JespXML con el archivo que quiero crear
             JespXML archivo = new JespXML("info.xml");            
             //le agrego un atributo a ese Tag (clientes="3")
-            raiz.addAtributo(new Atributo("empresa", "1"));
-            //creo el Tag cliente, que va a tener un nombre y un apellido
+            raizEmpresa.addAtributo(new Atributo("empresa", "1"));
+            //creo el Tag empresa, que va a tener un nombre una cedula y un consecutivo
             Tag empresa = new Tag("empresa");
             Tag nombre, cedula, consecutivo;
             //construyo los Tags nombre y apellido y le agrego contenido
@@ -79,9 +131,9 @@ public class XML {
             empresa.addTagHijo(cedula);
             empresa.addTagHijo(consecutivo);
             //finalmente agrego al Tag raiz, el tag cliente
-            raiz.addTagHijo(empresa);
+            raizEmpresa.addTagHijo(empresa);
             //y escribo el archivo XML
-            archivo.escribirXML(raiz);
+            archivo.escribirXML(raizEmpresa);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {

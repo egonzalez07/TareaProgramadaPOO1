@@ -27,7 +27,7 @@ public class XML {
     public XML(java.io.File archivoXML){        
     }
     XML() {}
-    public void leerXML() throws TagHijoNotFoundException, AtributoNotFoundException{
+    public void leerXML(){
         try {
             //Cargo el archivo
             JespXML archivo = new JespXML("info.xml");
@@ -50,14 +50,18 @@ public class XML {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TagHijoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AtributoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //declaro el Tag raiz, que en esta caso se llama raiz
+    public Tag raiz = new Tag("raiz");
     public void escribirXML(String pNombre, String pCedula, String pConsecutivo){
         try {
             //creo el objeto JespXML con el archivo que quiero crear
-            JespXML archivo = new JespXML("info.xml");
-            //declaro el Tag raiz, que en esta caso se llama raiz
-            Tag raiz = new Tag("raiz");
+            JespXML archivo = new JespXML("info.xml");            
             //le agrego un atributo a ese Tag (clientes="3")
             raiz.addAtributo(new Atributo("empresa", "1"));
             //creo el Tag cliente, que va a tener un nombre y un apellido

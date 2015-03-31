@@ -3,19 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Clases;
+//package Clases;
 
 /**
  *
  * @author alralaos
  */
-public class MainXML {
+//public class MainXML {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
         // TODO code application logic here
-        XML prueba=new XML();
-        prueba.escribirXML("LADUGO", "3-101-536894", "00000");
-    }
-}
+//        XML prueba=new XML();
+//        prueba.escribirEmpresa("LADUGO", "3-101-536894", "00000");
+//        prueba.leernombre();
+//        prueba.leercedula();
+//        prueba.leerconsecutivo();
+//    }
+//}

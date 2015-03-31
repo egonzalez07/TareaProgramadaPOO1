@@ -38,6 +38,26 @@ public class ListaSimple {
         size--;
         mostrarCobro(tarifa, horaEntrada, minutoEntrada, horaSalida, minutoSalida);
     }
+    public void ingresoVehiculo(int horaEntrada, int minutoEntrada, String marca, String placa){
+        if(size<topeNodo){
+            if(size==0){
+                primerNodo=ultimoNodo=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+                size++;
+            }
+        }else{
+            Nodo nodoActual=primerNodo;
+            while(nodoActual.getData().getVacio()!=true){
+                if(nodoActual.next==null){
+                    nodoActual.next=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+                    size++;
+                }else{
+                    nodoActual=nodoActual.next;
+                }
+            }
+            nodoActual=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+            size++;
+        }
+    }
     public int mostrarCobro(int tarifa, int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){
         
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;

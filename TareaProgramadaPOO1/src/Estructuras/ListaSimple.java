@@ -17,8 +17,8 @@ public class ListaSimple {
     private Nodo primerNodo;
     private Nodo ultimoNodo;
     private int size;
-    private int tarifa ;
-    private int topeNodo;
+    private final int tarifa ;
+    private final int topeNodo;
      Scanner sc = new Scanner(System.in);
     
     public ListaSimple(int pTopeNodo,int tarifa){
@@ -36,7 +36,7 @@ public class ListaSimple {
         int minutoEntrada=nodoActual.getData().getMinutos();
         nodoActual=new Nodo(new Carro(true),nodoActual.next);
         size--;
-        mostrarCobro(tarifa, horaEntrada, minutoEntrada, horaSalida, minutoSalida);
+        mostrarCobro(horaEntrada, minutoEntrada, horaSalida, minutoSalida);
     }
     public void ingresoVehiculo(int horaEntrada, int minutoEntrada, String marca, String placa){
         if(size<topeNodo){
@@ -58,100 +58,117 @@ public class ListaSimple {
             size++;
         }
     }
-    public int mostrarCobro(int tarifa, int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){
+      public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){
         
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;
         if ((horaSalida==horaEntrada)&&(minutoSalida==minutoEntrada)){//Un dia entero exacto
             montoPagar = tarifa*24;
+            System.out.print(montoPagar+"\n");
             return montoPagar;
         }        
-        if((horaSalida<horaEntrada)&&(minutoSalida<minutoEntrada)){//Significa que se ha pasado a un dia siguiente
+        if((horaSalida<=horaEntrada)&&(minutoSalida<minutoEntrada)){//Significa que se ha pasado a un dia siguiente
             //EJ: 9:30-6:20
-            
+        
             horas = 24-(horaEntrada-horaSalida)-1;
             minutos = 60-(minutoEntrada-minutoSalida);
-            if (0<minutos && minutos<16)     // entre 1 y 15              
+            System.out.print("Horas : "+horas);
+            System.out.print("\nMinutos : "+minutos+"\n");
+            if (0<minutos && minutos<16){     // entre 1 y 15              
                 minutos = 15;
-        
-            if(15<minutos && minutos<31)      //entre 16 y 30
+            }
+            if(15<minutos && minutos<31){      //entre 16 y 30
                 minutos = 30;
-        
-            if (30<minutos&& minutos<46)    //entre 31 y 45
+            }
+            if (30<minutos&& minutos<46){    //entre 31 y 45
                 minutos = 45;
-            
-            else if (minutos>45) //entre 46 y 59
+            }
+            else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
+            }
                 
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
-            montoPagar =  cobroHoras + cobroMinutos; 
+            montoPagar =  cobroHoras+cobroMinutos;
+            System.out.print("monto a pagar : "+montoPagar+"\n");
+            return montoPagar;
         }
         
         if((horaSalida<horaEntrada)&&(minutoSalida>minutoEntrada)){     //Significa que se ha pasado a un dia siguiente
             
             horas = 24-(horaEntrada-horaSalida);
             minutos = 60-(minutoEntrada + (60-minutoSalida));
-            if (0<minutos && minutos<16)     // entre 1 y 15              
+            System.out.print("Horas: "+horas);
+            System.out.print("\nMinutos: "+minutos+"\n");
+            if (0<minutos && minutos<16){     // entre 1 y 15              
                 minutos = 15;
-        
-            if(15<minutos && minutos<31)      //entre 16 y 30
+            }
+            if(15<minutos && minutos<31){      //entre 16 y 30
+                System.out.print("entro aqui\n");
                 minutos = 30;
+            }
         
-            if (30<minutos&& minutos<46)    //entre 31 y 45
+            if (30<minutos&& minutos<46){    //entre 31 y 45
                 minutos = 45;
-            
-            else if (minutos>45) //entre 46 y 59
+            }
+            else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
+            }
                 
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar =  cobroHoras + cobroMinutos; 
+            System.out.print("monto a pagar : "+montoPagar+"\n");
+            return montoPagar;
         }
         
         
         if(horaEntrada == horaSalida){//EJ:12:3 , 12:51
             horas = 0;
             minutos = minutoSalida-minutoEntrada;
-                
-            if (0<minutos && minutos<16)     // entre 1 y 15              
-                minutos = 15;
-        
-            if(15<minutos && minutos<31)      //entre 16 y 30
-                minutos = 30;
-        
-            if (30<minutos&& minutos<46)    //entre 31 y 45
-                minutos = 45;
             
-            else if (minutos>45) //entre 46 y 59
+            if (0<minutos && minutos<16){     // entre 1 y 15              
+                minutos = 15;
+            }
+            if(15<minutos && minutos<31){      //entre 16 y 30
+                minutos = 30;
+            }
+        
+            if (30<minutos&& minutos<46){    //entre 31 y 45
+                minutos = 45;
+            }
+            else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
+            }
                 
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar =  cobroHoras + cobroMinutos;
+            
         }
         if (minutoEntrada == minutoSalida){//EJ: 1:37, 2:37
+            
             horas = (horaSalida-horaEntrada);
             montoPagar = horas * tarifa;
             
         }if(minutoEntrada>minutoSalida){//EJ: 1:45, 4:23
             horas = (horaSalida-horaEntrada)-1;
             minutos = (60-minutoEntrada)+minutoSalida;
-            if (0<minutos && minutos<16)     // entre 1 y 15           
+            if (0<minutos && minutos<16){     // entre 1 y 15           
                 minutos = 15;
-        
-            if(15<minutos && minutos<31)        //entre 16 y 30
+            }
+            if(15<minutos && minutos<31) {       //entre 16 y 30
                 minutos = 30;
-        
-            if (30<minutos&& minutos<46)    //entre 31 y 45
+            }
+            if (30<minutos&& minutos<46){    //entre 31 y 45
                 minutos = 45;
-            
-            else if (minutos > 45)  //entre 46 y 59
+            }
+            else if (minutos > 45){  //entre 46 y 59
                 minutos = 0;
                 horas ++ ;
-
+            }   
             cobroHoras = horas * tarifa;
             cobroMinutos = cobrarMinutos(minutos);
             montoPagar = cobroHoras+cobroMinutos;
@@ -159,20 +176,23 @@ public class ListaSimple {
         }else if (minutoSalida>minutoEntrada){//EJ: 1:20, 2:45
             horas = (horaSalida-horaEntrada);
             minutos = minutoSalida-minutoEntrada;
-            if (0<minutos && minutos<16)    // entre 1 y 15
-                minutos = 15;    
-        
-            if(15<minutos && minutos<31)     //entre 16 y 30
-                minutos = 30; 
-        
-            if (30<minutos&& minutos<46)    //entre 31 y 45
-                minutos = 45;
             
-            else if (minutos > 45) //entre 46 y 59
+            if (0<minutos && minutos<16){    // entre 1 y 15
+                
+                minutos = 15;    
+            }
+            if(15<minutos && minutos<31){     //entre 16 y 30
+                minutos = 30; 
+            }
+            if (30<minutos&& minutos<46){    //entre 31 y 45
+                minutos = 45;
+            }
+            else if (minutos > 45){ //entre 46 y 59
                 minutos = 0;
-                horas ++;
-
-            cobroHoras = horas * tarifa;
+               horas ++;
+            }
+            
+            cobroHoras = horas * tarifa;  
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar = cobroHoras+cobroMinutos;
         
@@ -180,7 +200,7 @@ public class ListaSimple {
         System.out.print("Su deuda es de "+montoPagar);//Imprime el monto en pantalla
 
         //Esta es la opcion de interfaz que es  para poder pagar el parqueo   
-        System.out.print("\nIngreso dinero para cancelar: ");
+        System.out.print("\nIngrese dinero para cancelar: ");
         int dinero = sc.nextInt();
         return HacerPago(montoPagar, dinero);
         
@@ -190,7 +210,7 @@ public class ListaSimple {
         int vuelto=0 ;
         if(dinero>=deuda){
             vuelto = dinero-deuda;
-            //System.out.print("Cancelado"+vuelto);//JOption pane
+            System.out.print("Cancelado su vuelto es de : "+vuelto+" \n");
         }else{
             System.out.print("Dinero insuficiente");
         }
@@ -205,18 +225,7 @@ public class ListaSimple {
         if (minutos == 45)  precio =  tarifa-(tarifa/4);   
         return precio;
     }
-    public void AgregarCarro(Carro info){ //elka
-        Nodo nuevo = new Nodo(info);
-        if (size == 0){
-            primerNodo = ultimoNodo = nuevo ;
-            size ++;
-        }
-        else{//recorrerlo y donde este un carro vacio colocarlo alli
-            ultimoNodo.next = nuevo;
-            ultimoNodo = ultimoNodo.next;
-            size++;
-        }
-    }
+    
     //metodo booleano que busca carros
     
     public boolean encontrado(Carro dato){

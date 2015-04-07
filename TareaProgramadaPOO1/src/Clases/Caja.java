@@ -16,7 +16,7 @@ public class Caja {
     public int getDinero(){
         return this.dinero;
     }
-    public void setDinero(int dinero){
+    public void agregarDinero(int dinero){
         this.dinero += dinero;
     }
     public void sacarDinero(int dinero){

@@ -136,13 +136,13 @@ public class XML {
         return pTopeMax;
     }
     public Tag raizEmpresa = new Tag("info");
-    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pTarifa, String pContraseña, String pHorario, String pSlogan, String pTopeMax){
+    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pTarifa, String pContraseña, String pHorario, String pSlogan, String pTopeMax, String pMonto){
         try {
             //creo el objeto JespXML con el archivo que quiero crear
             JespXML archivo = new JespXML("info.xml");
             //creo el Tag empresa, que va a tener un nombre una cedula y un consecutivo
             Tag empresa = new Tag("empresa");
-            Tag nombre, cedula, consecutivo, telefono, tarifa, contraseña, horario, slogan, topeMax;
+            Tag nombre, cedula, consecutivo, telefono, tarifa, contraseña, horario, slogan, topeMax, monto;
             //construyo los Tags nombre y apellido y le agrego contenido
             nombre = new Tag("nombre");
             cedula = new Tag("cedula");
@@ -153,6 +153,7 @@ public class XML {
             horario= new Tag("horario");
             slogan= new Tag("slogan");
             topeMax= new Tag("topeMax");
+            monto= new Tag("monto");
             nombre.addContenido(pNombre);
             cedula.addContenido(pCedula);
             consecutivo.addContenido(pConsecutivo);
@@ -162,6 +163,7 @@ public class XML {
             horario.addContenido(pHorario);
             slogan.addContenido(pSlogan);
             topeMax.addContenido(pTopeMax);
+            monto.addContenido(pMonto);
             empresa.addTagHijo(nombre);
             empresa.addTagHijo(cedula);
             empresa.addTagHijo(consecutivo);
@@ -170,6 +172,7 @@ public class XML {
             empresa.addTagHijo(contraseña);
             empresa.addTagHijo(horario);
             empresa.addTagHijo(slogan);
+            empresa.addTagHijo(monto);
             raizEmpresa.addTagHijo(empresa);
             archivo.escribirXML(raizEmpresa);
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {

@@ -10,8 +10,8 @@ package Clases;
  * @author Alcides
  */
 public class Factura {
-    private int monto;
-    private int consecutivo;
+    private final int monto;
+    private final int consecutivo;
     public Factura(int pMonto, int pConsecutivo) {
         this.monto = pMonto;
         this.consecutivo=pConsecutivo;

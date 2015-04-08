@@ -28,5 +28,4 @@ public class ListaFactura {
             ultimoNodo=nodo;
         }
     }
-    
 }

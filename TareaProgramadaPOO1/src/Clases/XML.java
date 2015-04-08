@@ -26,7 +26,7 @@ import org.jespxml.modelo.Atributo;
 public class XML {
     public XML(java.io.File archivoXML){        
     }
-    XML() {}
+    public XML() {}
     public String leerNombre(){
         String pNombre="";
         try {
@@ -57,7 +57,7 @@ public class XML {
             JespXML archivo = new JespXML("info.xml");
             Tag raiz = archivo.leerXML();
             Tag consecutivo=raiz.getTagHijoByName("empresa").getTagHijoByName("consecutivo");
-            pConsecutivo = consecutivo.getContenido();
+            pConsecutivo =consecutivo.getContenido();
         } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -74,18 +74,6 @@ public class XML {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pTelefono;
-    }
-    public String leerTarifa(){
-        String pTarifa="";
-        try {
-            JespXML archivo = new JespXML("info.xml");
-            Tag raiz = archivo.leerXML();
-            Tag tarifa = raiz.getTagHijoByName("empresa").getTagHijoByName("tarifa");
-            pTarifa=tarifa.getContenido();
-        } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pTarifa;
     }
     public String leerContraseña(){
         String pContraseña="";
@@ -111,18 +99,6 @@ public class XML {
         }
         return pHorario;
     }
-    public String leerSlogan(){
-        String pSlogan="";
-        try {
-            JespXML archivo = new JespXML("info.xml");
-            Tag raiz = archivo.leerXML();
-            Tag slogan = raiz.getTagHijoByName("empresa").getTagHijoByName("slogan");
-            pSlogan=slogan.getContenido();
-        } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pSlogan;
-    }
     public String leerTopeMax(){
         String pTopeMax="";
         try {
@@ -136,13 +112,13 @@ public class XML {
         return pTopeMax;
     }
     public Tag raizEmpresa = new Tag("info");
-    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pTarifa, String pContraseña, String pHorario, String pSlogan, String pTopeMax, String pMonto){
+    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pContraseña, String pHorario, String pTopeMax, String pMonto){
         try {
             //creo el objeto JespXML con el archivo que quiero crear
             JespXML archivo = new JespXML("info.xml");
             //creo el Tag empresa, que va a tener un nombre una cedula y un consecutivo
             Tag empresa = new Tag("empresa");
-            Tag nombre, cedula, consecutivo, telefono, tarifa, contraseña, horario, slogan, topeMax, monto;
+            Tag nombre, cedula, consecutivo, telefono, tarifa, contraseña, horario, topeMax;
             //construyo los Tags nombre y apellido y le agrego contenido
             nombre = new Tag("nombre");
             cedula = new Tag("cedula");
@@ -151,19 +127,14 @@ public class XML {
             tarifa= new Tag("tarifa");
             contraseña= new Tag("contraseña");
             horario= new Tag("horario");
-            slogan= new Tag("slogan");
             topeMax= new Tag("topeMax");
-            monto= new Tag("monto");
             nombre.addContenido(pNombre);
             cedula.addContenido(pCedula);
             consecutivo.addContenido(pConsecutivo);
             telefono.addContenido(pTelefono);
-            tarifa.addContenido(pTarifa);
             contraseña.addContenido(pContraseña);
             horario.addContenido(pHorario);
-            slogan.addContenido(pSlogan);
             topeMax.addContenido(pTopeMax);
-            monto.addContenido(pMonto);
             empresa.addTagHijo(nombre);
             empresa.addTagHijo(cedula);
             empresa.addTagHijo(consecutivo);
@@ -171,12 +142,10 @@ public class XML {
             empresa.addTagHijo(tarifa);
             empresa.addTagHijo(contraseña);
             empresa.addTagHijo(horario);
-            empresa.addTagHijo(slogan);
-            empresa.addTagHijo(monto);
             raizEmpresa.addTagHijo(empresa);
             archivo.escribirXML(raizEmpresa);
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
+    }
 }

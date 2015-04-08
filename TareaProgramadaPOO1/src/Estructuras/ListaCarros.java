@@ -70,61 +70,8 @@ public class ListaCarros {
         }    }
       public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){        
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;
-        if ((horaSalida==horaEntrada)&&(minutoSalida==minutoEntrada)){//Un dia entero exacto
-            montoPagar = tarifa*24;
-            System.out.print(montoPagar+"\n");
-            return montoPagar;
-        }        
-        if((horaSalida<=horaEntrada)&&(minutoSalida<minutoEntrada)){//Significa que se ha pasado a un dia siguiente
-            //EJ: 9:30-6:20        
-            horas = 24-(horaEntrada-horaSalida)-1;
-            minutos = 60-(minutoEntrada-minutoSalida);
-            System.out.print("Horas : "+horas);
-            System.out.print("\nMinutos : "+minutos+"\n");
-            if (0<minutos && minutos<16){     // entre 1 y 15              
-                minutos = 15;
-            }
-            if(15<minutos && minutos<31){      //entre 16 y 30
-                minutos = 30;
-            }
-            if (30<minutos&& minutos<46){    //entre 31 y 45
-                minutos = 45;
-            }
-            else if (minutos>45){ //entre 46 y 59
-                minutos = 0;
-                horas ++;
-            }                
-            cobroHoras = horas*tarifa; 
-            cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
-            montoPagar =  cobroHoras+cobroMinutos;
-            System.out.print("monto a pagar : "+montoPagar+"\n");
-            return montoPagar;
-        }        
-        if((horaSalida<horaEntrada)&&(minutoSalida>minutoEntrada)){     //Significa que se ha pasado a un dia siguiente            
-            horas = 24-(horaEntrada-horaSalida);
-            minutos = 60-(minutoEntrada + (60-minutoSalida));
-            System.out.print("Horas: "+horas);
-            System.out.print("\nMinutos: "+minutos+"\n");
-            if (0<minutos && minutos<16){     // entre 1 y 15              
-                minutos = 15;
-            }
-            if(15<minutos && minutos<31){      //entre 16 y 30
-                System.out.print("entro aqui\n");
-                minutos = 30;
-            }        
-            if (30<minutos&& minutos<46){    //entre 31 y 45
-                minutos = 45;
-            }
-            else if (minutos>45){ //entre 46 y 59
-                minutos = 0;
-                horas ++;
-            }                
-            cobroHoras = horas*tarifa; 
-            cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
-            montoPagar =  cobroHoras + cobroMinutos; 
-            System.out.print("monto a pagar : "+montoPagar+"\n");
-            return montoPagar;
-        }        
+       
+       
         if(horaEntrada == horaSalida){//EJ:12:3 , 12:51
             horas = 0;
             minutos = minutoSalida-minutoEntrada;
@@ -145,8 +92,7 @@ public class ListaCarros {
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar =  cobroHoras + cobroMinutos;            
-        }
-        if (minutoEntrada == minutoSalida){//EJ: 1:37, 2:37            
+        }if (minutoEntrada == minutoSalida){//EJ: 1:37, 2:37            
             horas = (horaSalida-horaEntrada);
             montoPagar = horas * tarifa;            
         }if(minutoEntrada>minutoSalida){//EJ: 1:45, 4:23
@@ -253,6 +199,8 @@ public class ListaCarros {
                 Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
             }
             String val= Integer.toString(caja.getDinero()-pMonto);
+            XML xml=new XML();
+//            xml.escribirEmpresa(xml.leerNombre(),xml.leerCedula(),Integer.toString(xml.leerConsecutivo())+)
             return "el monto que se gano el dia de hoy es: "+val;
         }else{
             return "El parqueo no se puede cerrar";

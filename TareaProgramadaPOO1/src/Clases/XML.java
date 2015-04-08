@@ -162,6 +162,7 @@ public class XML {
             contraseña= new Tag("contraseña");
             horario= new Tag("horario");
             topeMax= new Tag("topeMax");
+            //asigno los valores ingresados a los tags
             nombre.addContenido(pNombre);
             cedula.addContenido(pCedula);
             consecutivo.addContenido(pConsecutivo);
@@ -170,6 +171,7 @@ public class XML {
             contraseña.addContenido(pContraseña);
             horario.addContenido(pHorario);
             topeMax.addContenido(pTopeMax);
+            //agrego todos los tags al tag empresa
             empresa.addTagHijo(nombre);
             empresa.addTagHijo(cedula);
             empresa.addTagHijo(consecutivo);
@@ -178,7 +180,9 @@ public class XML {
             empresa.addTagHijo(contraseña);
             empresa.addTagHijo(horario);
             empresa.addTagHijo(topeMax);
+            //agrego el tag empresa al tag raiz
             raizEmpresa.addTagHijo(empresa);
+            //escribo en el xml el tag raiz
             archivo.escribirXML(raizEmpresa);
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);

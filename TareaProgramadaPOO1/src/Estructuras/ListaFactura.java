@@ -13,15 +13,16 @@ public class ListaFactura {
     private  NodoFactura primerNodo;
     private NodoFactura ultimoNodo;
     private int size;
-
+    //regresa la cantidad de elemenetos que tiene la lista
     public int getSize() {
         return size;
     }
-
+    //inicialiso la lista
     public ListaFactura() {
         ultimoNodo=primerNodo=null;
         size=0;
     }
+    //agrego elementos a la lista
     public void agregar(NodoFactura nodo){
         if(size==0){
             ultimoNodo=primerNodo=nodo;
@@ -32,6 +33,7 @@ public class ListaFactura {
             ultimoNodo=nodo;
         }
     }
+    // se muestran todos los elementos de la lista
     public void mostrarFacturas(){
         NodoFactura nodoActual=primerNodo;
         while(nodoActual.next!=null){

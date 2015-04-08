@@ -32,7 +32,7 @@ public class ListaCarros {
     Scanner sc = new Scanner(System.in);
     private Caja caja; 
     private ListaFactura lista;
-    
+    //creo una nueva lista. ingresa la capacidad maxima de carros, la tarifa por hora y una caja
     public ListaCarros(int pTopeNodo,int tarifa, Caja caja){
         primerNodo=ultimoNodo=null;
         topeNodo=pTopeNodo;
@@ -40,6 +40,7 @@ public class ListaCarros {
         size=0;
         this.caja=caja;
     }
+    //elimina un carro de la lista
     public void sacar(String placa,int horaSalida,int minutoSalida) {
         NodoCarro nodoActual=primerNodo;
         while(nodoActual.getData().getPlaca()!=placa){
@@ -49,7 +50,9 @@ public class ListaCarros {
         int minutoEntrada=nodoActual.getData().getMinutos();
         nodoActual=new NodoCarro(new Carro(true),nodoActual.next);
         size--;
-        mostrarCobro(horaEntrada, minutoEntrada, horaSalida, minutoSalida);    }
+        mostrarCobro(horaEntrada, minutoEntrada, horaSalida, minutoSalida);    
+    }
+    //ingreso un nuevo vehiculo a la lista
     public void ingresoVehiculo(int horaEntrada, int minutoEntrada, String marca, String placa){
         if(size<topeNodo){
             if(size==0){
@@ -68,11 +71,11 @@ public class ListaCarros {
             }
             nodoActual=new NodoCarro(new Carro(placa,marca,horaEntrada,minutoEntrada));
             size++;
-        }    }
+        }    
+    }
+    //realiza el calculo de cuanto tiempo estuvo en el parqueo el vehiculo
       public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){        
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;
-       
-       
         if(horaEntrada == horaSalida){//EJ:12:3 , 12:51
             horas = 0;
             minutos = minutoSalida-minutoEntrada;
@@ -153,8 +156,8 @@ public class ListaCarros {
             System.out.print("Dinero insuficiente");
         }
         return vuelto;
-    }
-    
+    }    
+    //realiza el calculo de cuanto se paga por la cantidad de minutos
     public int  cobrarMinutos(int minutos){
         int precio = 0;
         if (minutos == 0) precio = 0;
@@ -162,24 +165,18 @@ public class ListaCarros {
         if(minutos == 30) precio = tarifa/2;
         if (minutos == 45)  precio =  tarifa-(tarifa/4);   
         return precio;
-    }
-    
-    //metodo booleano que busca carros
-    
-    public boolean encontrado(Carro dato){
-        
+    }    
+    //metodo booleano que busca carros    
+    public boolean encontrado(Carro dato){        
         NodoCarro aux = primerNodo;
         while(aux!=null){
             if (aux.getData().equals(dato))
                 return true;
             else
                 aux = aux.next;
-            
-            
         }
         return false;
     }
-
     public void imprimir(){//   Mediante interfaz que muestre el estado del parqueo
       
         NodoCarro aux = primerNodo;
@@ -189,6 +186,7 @@ public class ListaCarros {
         }
         System.out.print("\n");
     }
+    //metodo que cierra el parqueo
     public String cerrarParqueo(){
         if(size==0){
             int pMonto=0;
@@ -202,6 +200,7 @@ public class ListaCarros {
             }
             String val= Integer.toString(caja.getDinero()-pMonto);
             XML xml=new XML();
+            //sobreescribe el valor del consecutivo del xml
             xml.escribirEmpresa(xml.leerNombre(),xml.leerCedula(),Integer.toString(Integer.parseInt(xml.leerConsecutivo())+lista.getSize()),xml.leerTelefono(),xml.leerTarifa(),xml.leerContraseña(),xml.leerHorario(),xml.leerTopeMax());
             return "el monto que se gano el dia de hoy es: "+val;
         }else{

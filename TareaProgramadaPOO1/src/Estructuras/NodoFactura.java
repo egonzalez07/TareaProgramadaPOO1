@@ -14,13 +14,16 @@ import Clases.Factura;
 public class NodoFactura {
     public NodoFactura next;
     private Factura data;
+    //crea un nodo con un puntero directo a otro
     public NodoFactura(Factura element, NodoFactura pNext){
         data=element;
         next=pNext;
     }
+    //crea un nodo
     public NodoFactura(Factura element){
         data = element;
     }
+    //metodo que regresa la informacion del nodo
     public Factura getData() {
         return data;
     } 

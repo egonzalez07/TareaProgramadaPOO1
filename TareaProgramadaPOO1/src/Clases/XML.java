@@ -178,34 +178,5 @@ public class XML {
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {
             Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public Tag raizFactura = new Tag("factura");
-    public void iniciarFacturas(){
-        JespXML archivo = new JespXML("facturas.xml");
-        escribirFactura(archivo,"01","01","01");        
-    }
-    public void escribirFactura(JespXML archivo, String pMonto, String pPlaca, String pConsecutivo){
-        try {
-            Tag raiz = archivo.leerXML();
-            Tag factura = raiz.getTagHijoByName("factura");
-            Tag monto, placa, consecutivo;
-            monto = new Tag("monto");
-            placa = new Tag("placa"); 
-            consecutivo = new Tag("consecutivo");
-            monto.addContenido(pMonto);
-            placa.addContenido(pPlaca);
-            consecutivo.addContenido(pConsecutivo);
-            factura.addTagHijo(monto);
-            factura.addTagHijo(placa);
-            factura.addTagHijo(consecutivo);
-            raiz.addTagHijo(factura);
-            archivo.escribirXML(raiz);
-        } catch (ParserConfigurationException | TransformerException | SAXException | TagHijoNotFoundException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }    
 }

@@ -8,7 +8,7 @@ package Estructuras;
 import Clases.Caja;
 import Clases.Carro;
 import Clases.XML;
-import Estructuras.Nodo;
+import Estructuras.NodoCarro;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,16 +23,16 @@ import org.xml.sax.SAXException;
  *
  * @author alralaos
  */
-public class ListaSimple {
-    private Nodo primerNodo;
-    private Nodo ultimoNodo;
+public class ListaCarros {
+    private NodoCarro primerNodo;
+    private NodoCarro ultimoNodo;
     private int size;
     private final int tarifa ;
     private final int topeNodo;
     Scanner sc = new Scanner(System.in);
     private Caja caja; 
     
-    public ListaSimple(int pTopeNodo,int tarifa, Caja caja){
+    public ListaCarros(int pTopeNodo,int tarifa, Caja caja){
         primerNodo=ultimoNodo=null;
         topeNodo=pTopeNodo;
         this.tarifa = tarifa;
@@ -40,38 +40,35 @@ public class ListaSimple {
         this.caja=caja;
     }
     public void sacar(String placa,int horaSalida,int minutoSalida) {
-        Nodo nodoActual=primerNodo;
+        NodoCarro nodoActual=primerNodo;
         while(nodoActual.getData().getPlaca()!=placa){
             nodoActual=nodoActual.next;
         }
         int horaEntrada=nodoActual.getData().getHora();
         int minutoEntrada=nodoActual.getData().getMinutos();
-        nodoActual=new Nodo(new Carro(true),nodoActual.next);
+        nodoActual=new NodoCarro(new Carro(true),nodoActual.next);
         size--;
-        mostrarCobro(horaEntrada, minutoEntrada, horaSalida, minutoSalida);
-    }
+        mostrarCobro(horaEntrada, minutoEntrada, horaSalida, minutoSalida);    }
     public void ingresoVehiculo(int horaEntrada, int minutoEntrada, String marca, String placa){
         if(size<topeNodo){
             if(size==0){
-                primerNodo=ultimoNodo=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+                primerNodo=ultimoNodo=new NodoCarro(new Carro(placa,marca,horaEntrada,minutoEntrada));
                 size++;
             }
         }else{
-            Nodo nodoActual=primerNodo;
+            NodoCarro nodoActual=primerNodo;
             while(nodoActual.getData().getVacio()!=true){
                 if(nodoActual.next==null){
-                    nodoActual.next=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+                    nodoActual.next=new NodoCarro(new Carro(placa,marca,horaEntrada,minutoEntrada));
                     size++;
                 }else{
                     nodoActual=nodoActual.next;
                 }
             }
-            nodoActual=new Nodo(new Carro(placa,marca,horaEntrada,minutoEntrada));
+            nodoActual=new NodoCarro(new Carro(placa,marca,horaEntrada,minutoEntrada));
             size++;
-        }
-    }
-      public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){
-        
+        }    }
+      public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){        
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;
         if ((horaSalida==horaEntrada)&&(minutoSalida==minutoEntrada)){//Un dia entero exacto
             montoPagar = tarifa*24;
@@ -79,8 +76,7 @@ public class ListaSimple {
             return montoPagar;
         }        
         if((horaSalida<=horaEntrada)&&(minutoSalida<minutoEntrada)){//Significa que se ha pasado a un dia siguiente
-            //EJ: 9:30-6:20
-        
+            //EJ: 9:30-6:20        
             horas = 24-(horaEntrada-horaSalida)-1;
             minutos = 60-(minutoEntrada-minutoSalida);
             System.out.print("Horas : "+horas);
@@ -97,17 +93,14 @@ public class ListaSimple {
             else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
-            }
-                
+            }                
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar =  cobroHoras+cobroMinutos;
             System.out.print("monto a pagar : "+montoPagar+"\n");
             return montoPagar;
-        }
-        
-        if((horaSalida<horaEntrada)&&(minutoSalida>minutoEntrada)){     //Significa que se ha pasado a un dia siguiente
-            
+        }        
+        if((horaSalida<horaEntrada)&&(minutoSalida>minutoEntrada)){     //Significa que se ha pasado a un dia siguiente            
             horas = 24-(horaEntrada-horaSalida);
             minutos = 60-(minutoEntrada + (60-minutoSalida));
             System.out.print("Horas: "+horas);
@@ -118,24 +111,20 @@ public class ListaSimple {
             if(15<minutos && minutos<31){      //entre 16 y 30
                 System.out.print("entro aqui\n");
                 minutos = 30;
-            }
-        
+            }        
             if (30<minutos&& minutos<46){    //entre 31 y 45
                 minutos = 45;
             }
             else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
-            }
-                
+            }                
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar =  cobroHoras + cobroMinutos; 
             System.out.print("monto a pagar : "+montoPagar+"\n");
             return montoPagar;
-        }
-        
-        
+        }        
         if(horaEntrada == horaSalida){//EJ:12:3 , 12:51
             horas = 0;
             minutos = minutoSalida-minutoEntrada;
@@ -145,26 +134,21 @@ public class ListaSimple {
             }
             if(15<minutos && minutos<31){      //entre 16 y 30
                 minutos = 30;
-            }
-        
+            }        
             if (30<minutos&& minutos<46){    //entre 31 y 45
                 minutos = 45;
             }
             else if (minutos>45){ //entre 46 y 59
                 minutos = 0;
                 horas ++;
-            }
-                
+            }                
             cobroHoras = horas*tarifa; 
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
-            montoPagar =  cobroHoras + cobroMinutos;
-            
+            montoPagar =  cobroHoras + cobroMinutos;            
         }
-        if (minutoEntrada == minutoSalida){//EJ: 1:37, 2:37
-            
+        if (minutoEntrada == minutoSalida){//EJ: 1:37, 2:37            
             horas = (horaSalida-horaEntrada);
-            montoPagar = horas * tarifa;
-            
+            montoPagar = horas * tarifa;            
         }if(minutoEntrada>minutoSalida){//EJ: 1:45, 4:23
             horas = (horaSalida-horaEntrada)-1;
             minutos = (60-minutoEntrada)+minutoSalida;
@@ -183,14 +167,12 @@ public class ListaSimple {
             }   
             cobroHoras = horas * tarifa;
             cobroMinutos = cobrarMinutos(minutos);
-            montoPagar = cobroHoras+cobroMinutos;
-        
+            montoPagar = cobroHoras+cobroMinutos;        
         }else if (minutoSalida>minutoEntrada){//EJ: 1:20, 2:45
             horas = (horaSalida-horaEntrada);
             minutos = minutoSalida-minutoEntrada;
             
             if (0<minutos && minutos<16){    // entre 1 y 15
-                
                 minutos = 15;    
             }
             if(15<minutos && minutos<31){     //entre 16 y 30
@@ -202,20 +184,16 @@ public class ListaSimple {
             else if (minutos > 45){ //entre 46 y 59
                 minutos = 0;
                horas ++;
-            }
-            
+            }            
             cobroHoras = horas * tarifa;  
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar = cobroHoras+cobroMinutos;
-        
         }
         System.out.print("Su deuda es de "+montoPagar);//Imprime el monto en pantalla
-
         //Esta es la opcion de interfaz que es  para poder pagar el parqueo   
         System.out.print("\nIngrese dinero para cancelar: ");
         int dinero = sc.nextInt();
-        return HacerPago(montoPagar, dinero);
-        
+        return HacerPago(montoPagar, dinero);        
     }
     //Funcion que realiza el pago del parqueo
     public int HacerPago(int deuda, int dinero){
@@ -242,7 +220,7 @@ public class ListaSimple {
     
     public boolean encontrado(Carro dato){
         
-        Nodo aux = primerNodo;
+        NodoCarro aux = primerNodo;
         while(aux!=null){
             if (aux.getData().equals(dato))
                 return true;
@@ -256,7 +234,7 @@ public class ListaSimple {
 
     public void imprimir(){//   Mediante interfaz que muestre el estado del parqueo
       
-        Nodo aux = primerNodo;
+        NodoCarro aux = primerNodo;
         while(aux!=null){
             System.out.print(aux.getData()+" ");
             aux = aux.next;

@@ -5,26 +5,26 @@
  */
 package Estructuras;
 
-import Clases.Carro;
+import Clases.Factura;
 
 /**
  *
- * @author alralaos
+ * @author Alcides
  */
-public class Nodo {
-    public Nodo next;
-    private Carro data;
-    public Nodo(Carro element, Nodo pNext){
+public class NodoFactura {
+    public NodoFactura next;
+    private Factura data;
+    public NodoFactura(Factura element, NodoFactura pNext){
         data=element;
         next=pNext;
     }
-    public Nodo(Carro element){
+    public NodoFactura(Factura element){
         data = element;
     }
-    public Carro getData() {
+    public Factura getData() {
         return data;
     } 
-    public void setData(Carro pData) {
+    public void setData(Factura pData) {
         data = pData;
-    }   
+    }  
 }

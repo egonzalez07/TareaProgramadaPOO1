@@ -5,9 +5,19 @@
  */
 package Estructuras;
 
+import Clases.Caja;
 import Clases.Carro;
+import Clases.XML;
 import Estructuras.Nodo;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.jespxml.JespXML;
+import org.jespxml.excepciones.TagHijoNotFoundException;
+import org.jespxml.modelo.Tag;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -19,13 +29,15 @@ public class ListaSimple {
     private int size;
     private final int tarifa ;
     private final int topeNodo;
-     Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
+    private Caja caja; 
     
-    public ListaSimple(int pTopeNodo,int tarifa){
+    public ListaSimple(int pTopeNodo,int tarifa, Caja caja){
         primerNodo=ultimoNodo=null;
         topeNodo=pTopeNodo;
         this.tarifa = tarifa;
         size=0;
+        this.caja=caja;
     }
     public void sacar(String placa,int horaSalida,int minutoSalida) {
         Nodo nodoActual=primerNodo;
@@ -251,5 +263,21 @@ public class ListaSimple {
         }
         System.out.print("\n");
     }
-    
+    public String cerrarParqueo(){
+        if(size==0){
+            int pMonto=0;
+            try {
+                JespXML archivo = new JespXML("info.xml");
+                Tag raiz = archivo.leerXML();
+                Tag monto = raiz.getTagHijoByName("empresa").getTagHijoByName("monto");
+                pMonto=Integer.parseInt(monto.getContenido());
+            } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
+                Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String val= Integer.toString(caja.getDinero()-pMonto);
+            return "el monto que se gano el dia de hoy es: "+val;
+        }else{
+            return "El parqueo no se puede cerrar";
+        }
+    }
 }

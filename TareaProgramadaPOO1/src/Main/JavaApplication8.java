@@ -7,6 +7,7 @@ package Main;
 
 import Clases.Caja;
 import Clases.XML;
+import Estructuras.ListaCarros;
 import Grafica.Inicio;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -29,6 +30,7 @@ public class JavaApplication8 {
         // TODO code application logic here
         Inicio inicio= new Inicio();
         Caja caja=new Caja(10000);
+        ListaCarros lista=new ListaCarros(10,1500,caja);
         
     }   
 }

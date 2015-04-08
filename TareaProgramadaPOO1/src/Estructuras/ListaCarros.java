@@ -31,6 +31,7 @@ public class ListaCarros {
     private final int topeNodo;
     Scanner sc = new Scanner(System.in);
     private Caja caja; 
+    private ListaFactura lista;
     
     public ListaCarros(int pTopeNodo,int tarifa, Caja caja){
         primerNodo=ultimoNodo=null;
@@ -146,6 +147,7 @@ public class ListaCarros {
         int vuelto=0 ;
         if(dinero>=deuda){
             vuelto = dinero-deuda;
+            caja.agregarDinero(deuda);
             System.out.print("Cancelado su vuelto es de : "+vuelto+" \n");
         }else{
             System.out.print("Dinero insuficiente");
@@ -200,7 +202,7 @@ public class ListaCarros {
             }
             String val= Integer.toString(caja.getDinero()-pMonto);
             XML xml=new XML();
-//            xml.escribirEmpresa(xml.leerNombre(),xml.leerCedula(),Integer.toString(xml.leerConsecutivo())+)
+            xml.escribirEmpresa(xml.leerNombre(),xml.leerCedula(),Integer.toString(Integer.parseInt(xml.leerConsecutivo())+lista.getSize()),xml.leerTelefono(),xml.leerTarifa(),xml.leerContraseña(),xml.leerHorario(),xml.leerTopeMax());
             return "el monto que se gano el dia de hoy es: "+val;
         }else{
             return "El parqueo no se puede cerrar";

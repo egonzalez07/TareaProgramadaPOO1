@@ -14,6 +14,10 @@ public class ListaFactura {
     private NodoFactura ultimoNodo;
     private int size;
 
+    public int getSize() {
+        return size;
+    }
+
     public ListaFactura() {
         ultimoNodo=primerNodo=null;
         size=0;
@@ -27,5 +31,15 @@ public class ListaFactura {
             ultimoNodo.next=nodo;
             ultimoNodo=nodo;
         }
+    }
+    public void mostrarFacturas(){
+        NodoFactura nodoActual=primerNodo;
+        while(nodoActual.next!=null){
+            System.out.println(nodoActual.getData().getConsecutivo());
+            System.out.println(nodoActual.getData().getMonto());
+            nodoActual=nodoActual.next;
+        }
+        System.out.println(nodoActual.getData().getConsecutivo());
+        System.out.println(nodoActual.getData().getMonto());
     }
 }

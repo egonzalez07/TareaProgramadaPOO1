@@ -26,7 +26,9 @@ import org.jespxml.modelo.Atributo;
 public class XML {
     public XML(java.io.File archivoXML){        
     }
+    // crea un objeto de tipo xml
     public XML() {}
+    //lee del archivo .xml el nombre de la empresa
     public String leerNombre(){
         String pNombre="";
         try {
@@ -39,6 +41,7 @@ public class XML {
         }
         return pNombre;
     }
+    //lee del archivo .xml la cedula de la empresa
     public String leerCedula(){
         String pCedula="";
         try {
@@ -51,6 +54,7 @@ public class XML {
         }
         return pCedula;
     }
+    //lee del archivo .xml el consecutivo de las facturas
     public String leerConsecutivo(){
         String pConsecutivo="";
         try {
@@ -75,6 +79,7 @@ public class XML {
         }
         return pTelefono;
     }
+    //lee del archivo .xml la contraseña de la empresa
     public String leerContraseña(){
         String pContraseña="";
         try {
@@ -87,6 +92,7 @@ public class XML {
         }
         return pContraseña;
     }
+     //lee del archivo .xml el horario  de la empresa
     public String leerHorario(){
         String pHorario="";
         try {
@@ -99,6 +105,7 @@ public class XML {
         }
         return pHorario;
     }
+     //lee del archivo .xml el tope maximo de la empresa
     public String leerTopeMax(){
         String pTopeMax="";
         try {
@@ -111,8 +118,35 @@ public class XML {
         }
         return pTopeMax;
     }
+     //lee del archivo .xml el monto de la empresa
+    public String leerMonto(){
+        String pMonto="";
+        try {
+            JespXML archivo = new JespXML("info.xml");
+            Tag raiz = archivo.leerXML();
+            Tag monto = raiz.getTagHijoByName("empresa").getTagHijoByName("monto");
+            pMonto=monto.getContenido();
+        } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pMonto;
+    }
+     //lee del archivo .xml la tarifa  de la empresa
+    public String leerTarifa(){
+        String pTarifa="";
+        try {
+            JespXML archivo = new JespXML("info.xml");
+            Tag raiz = archivo.leerXML();
+            Tag tarifa = raiz.getTagHijoByName("empresa").getTagHijoByName("tarifa");
+            pTarifa=tarifa.getContenido();
+        } catch (ParserConfigurationException | SAXException | IOException | TagHijoNotFoundException ex) {
+            Logger.getLogger(XML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pTarifa;
+    }
+    //Entradas:los parametros de la configuración de la empresa
     public Tag raizEmpresa = new Tag("info");
-    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pContraseña, String pHorario, String pTopeMax, String pMonto){
+    public void escribirEmpresa(String pNombre, String pCedula, String pConsecutivo, String pTelefono, String pTarifa, String pContraseña, String pHorario, String pTopeMax){
         try {
             //creo el objeto JespXML con el archivo que quiero crear
             JespXML archivo = new JespXML("info.xml");
@@ -132,6 +166,7 @@ public class XML {
             cedula.addContenido(pCedula);
             consecutivo.addContenido(pConsecutivo);
             telefono.addContenido(pTelefono);
+            tarifa.addContenido(pTarifa);
             contraseña.addContenido(pContraseña);
             horario.addContenido(pHorario);
             topeMax.addContenido(pTopeMax);
@@ -142,6 +177,7 @@ public class XML {
             empresa.addTagHijo(tarifa);
             empresa.addTagHijo(contraseña);
             empresa.addTagHijo(horario);
+            empresa.addTagHijo(topeMax);
             raizEmpresa.addTagHijo(empresa);
             archivo.escribirXML(raizEmpresa);
         } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {

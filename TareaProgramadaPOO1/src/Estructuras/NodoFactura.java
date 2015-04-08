@@ -24,7 +24,4 @@ public class NodoFactura {
     public Factura getData() {
         return data;
     } 
-    public void setData(Factura pData) {
-        data = pData;
-    }  
 }

@@ -17,7 +17,7 @@ public class EntradaSalidaEfectivo {
     public EntradaSalidaEfectivo(){}
     
     public void ingresarDinero(int monto,String contraseña){
-        if(contraseña.equals(contraseñaAdministrador)){ caja.setDinero(monto);} 
+        if(contraseña.equals(contraseñaAdministrador)){ caja.agregarDinero(monto);} 
         JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden");
     }
     public void retirarDinero(int monto, String contraseña){

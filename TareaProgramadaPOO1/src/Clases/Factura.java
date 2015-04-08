@@ -11,10 +11,15 @@ package Clases;
  */
 public class Factura {
     private int monto;
-    public Factura(int monto) {
-        this.monto = monto;
+    private int consecutivo;
+    public Factura(int pMonto, int pConsecutivo) {
+        this.monto = pMonto;
+        this.consecutivo=pConsecutivo;
     }
     public int getMonto() {
         return monto;
+    }    
+    public int getConsecutivo() {
+        return consecutivo;
     }    
 }

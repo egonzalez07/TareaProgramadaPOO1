@@ -11,7 +11,8 @@ import javax.swing.JOptionPane;
  */
 public class Caja {
     int dinero;
-    public Caja(){}
+    public Caja(int monto){
+    }
     
     public int getDinero(){
         return this.dinero;

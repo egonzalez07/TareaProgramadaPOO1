@@ -22,7 +22,7 @@ public class EntradaSalidaEfectivo {
     
     Caja caja;        
     XML xml=new XML();
-    String contraseñaAdministrador=xml.leerContraseña();
+    String contraseñaAdministrador = xml.leerContraseña();
     
     public EntradaSalidaEfectivo(Caja caja){this.caja = caja;}
       

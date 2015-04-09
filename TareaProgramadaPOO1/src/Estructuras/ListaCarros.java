@@ -9,15 +9,30 @@ import Clases.Caja;
 import Clases.Carro;
 import Clases.XML;
 import Estructuras.NodoCarro;
+import Grafica.SolicitarDinero;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jespxml.JespXML;
 import org.jespxml.excepciones.TagHijoNotFoundException;
 import org.jespxml.modelo.Tag;
 import org.xml.sax.SAXException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.jespxml.JespXML;
+import org.jespxml.excepciones.AtributoNotFoundException;
+import org.jespxml.excepciones.TagHijoNotFoundException;
+import org.jespxml.modelo.Tag;
+import org.xml.sax.SAXException;
+import java.io.FileNotFoundException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.jespxml.modelo.Atributo;
 
 /**
  *
@@ -29,7 +44,6 @@ public class ListaCarros {
     private int size;
     private final int tarifa ;
     private final int topeNodo;
-    Scanner sc = new Scanner(System.in);
     private Caja caja; 
     private ListaFactura lista;
     //creo una nueva lista. ingresa la capacidad maxima de carros, la tarifa por hora y una caja
@@ -74,7 +88,7 @@ public class ListaCarros {
         }    
     }
     //realiza el calculo de cuanto tiempo estuvo en el parqueo el vehiculo
-      public int mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){        
+     public void mostrarCobro(int horaEntrada, int minutoEntrada, int horaSalida, int minutoSalida){        
         int horas,minutos,cobroHoras,cobroMinutos,montoPagar = 0;
         if(horaEntrada == horaSalida){//EJ:12:3 , 12:51
             horas = 0;
@@ -139,14 +153,17 @@ public class ListaCarros {
             cobroMinutos = cobrarMinutos(minutos);//Llamada a la funcion que calcula el cobro de minutos
             montoPagar = cobroHoras+cobroMinutos;
         }
-        System.out.print("Su deuda es de "+montoPagar);//Imprime el monto en pantalla
-        //Esta es la opcion de interfaz que es  para poder pagar el parqueo   
-        System.out.print("\nIngrese dinero para cancelar: ");
-        int dinero = sc.nextInt();
-        return HacerPago(montoPagar, dinero);        
+        System.out.print("Su deuda es de "+montoPagar);
+        HacerPago(montoPagar);        
+    }
+    public void HacerPago(int deuda){        
+        SolicitarDinero dineros=new SolicitarDinero(deuda);
+//        dineros.dineroE();
+//        int dinero=dineros.dineroL();
+//        HacerPago(deuda,dinero);
     }
     //Funcion que realiza el pago del parqueo
-    public int HacerPago(int deuda, int dinero){
+    public void HacerPago(int deuda, int dinero){
         int vuelto=0 ;
         if(dinero>=deuda){
             vuelto = dinero-deuda;
@@ -155,7 +172,7 @@ public class ListaCarros {
         }else{
             System.out.print("Dinero insuficiente");
         }
-        return vuelto;
+        JOptionPane.showMessageDialog(null,"El vuelto es de "+vuelto);
     }    
     //realiza el calculo de cuanto se paga por la cantidad de minutos
     public int  cobrarMinutos(int minutos){

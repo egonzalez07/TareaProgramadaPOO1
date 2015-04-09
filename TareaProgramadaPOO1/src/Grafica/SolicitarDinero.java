@@ -5,45 +5,21 @@
  */
 package Grafica;
 
-import Clases.XML;
-import Estructuras.ListaCarros;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.jespxml.JespXML;
-import org.jespxml.excepciones.TagHijoNotFoundException;
-import org.jespxml.modelo.Tag;
-import org.xml.sax.SAXException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.jespxml.JespXML;
-import org.jespxml.excepciones.AtributoNotFoundException;
-import org.jespxml.excepciones.TagHijoNotFoundException;
-import org.jespxml.modelo.Tag;
-import org.xml.sax.SAXException;
-import java.io.FileNotFoundException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.jespxml.modelo.Atributo;
+import Clases.Caja;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Alcides
  */
 public class SolicitarDinero extends javax.swing.JFrame {
-    int deuda;
+    String monto;
+    static int deuda;
     /**
      * Creates new form SolicitarDinero
      */
-    public SolicitarDinero(int deuda) {
-        this.deuda=deuda;
-        initComponents();
-    }
-
+    public SolicitarDinero() {
+        initComponents();        
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,18 +29,12 @@ public class SolicitarDinero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Su deuda es de ");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Ingrese el dinero");
 
         jButton1.setText("Pagar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +43,10 @@ public class SolicitarDinero extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Su deuda es de");
+
+        jLabel2.setText("Con cuanto paga?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,74 +54,103 @@ public class SolicitarDinero extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel2))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jButton1)))
-                .addContainerGap(82, Short.MAX_VALUE))
+                        .addGap(52, 52, 52)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(258, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       dineroE();            
+        monto=jTextField1.getText();
+        int dinero;
+        dinero=Integer.parseInt(monto);
+        HacerPago(deuda,dinero);
+        this.hide();
+        //dinero();
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
-    public void dineroE(){
-        String dinero=jTextField1.getText();
-        System.out.println(dinero);
-        try {
-            //creo el objeto JespXML con el archivo que quiero crear
-            JespXML archivo = new JespXML("montos.xml");
-            //creo el Tag empresa, que va a tener un nombre una cedula y un consecutivo
-            Tag monto = new Tag("monto");
-            monto.addContenido(dinero);
-            archivo.escribirXML(monto);
-        } catch (ParserConfigurationException | FileNotFoundException | TransformerException ex) {
-            Logger.getLogger(SolicitarDinero.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setDeuda(int monto){
+        jLabel1.setText("Su deuda es de "+monto);
+        deuda=monto;
     }
-    public int dineroL(){
-        String pDinero="";
-        try {
-            JespXML archivo = new JespXML("montos.xml");
-            Tag raiz = archivo.leerXML();
-            Tag monto = raiz.getTagHijoByName("monto");
-            pDinero=monto.getContenido();
-        } catch (TagHijoNotFoundException | ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(SolicitarDinero.class.getName()).log(Level.SEVERE, null, ex);
+    public int dinero(){
+            int dinero;
+            System.out.println(monto);
+            dinero=Integer.parseInt(monto);
+            return dinero;       
+    }
+    Caja caja;
+    //Funcion que realiza el pago del parqueo
+    public void HacerPago(int deuda, int dinero){        
+        if(dinero>=deuda){
+            JOptionPane.showMessageDialog(null,"El vuelto es de "+(dinero-deuda));
+            caja.agregarDinero(deuda);
+        }else{
+            JOptionPane.showMessageDialog(null,"El dinero es insuficiente");
         }
-        int dinero= Integer.parseInt(pDinero);
-        return dinero;
-    }  
+        
+    }    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

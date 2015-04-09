@@ -11,28 +11,13 @@ import Clases.XML;
 import Estructuras.NodoCarro;
 import Grafica.SolicitarDinero;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jespxml.JespXML;
 import org.jespxml.excepciones.TagHijoNotFoundException;
 import org.jespxml.modelo.Tag;
 import org.xml.sax.SAXException;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.jespxml.JespXML;
-import org.jespxml.excepciones.AtributoNotFoundException;
-import org.jespxml.excepciones.TagHijoNotFoundException;
-import org.jespxml.modelo.Tag;
-import org.xml.sax.SAXException;
-import java.io.FileNotFoundException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.jespxml.modelo.Atributo;
 
 /**
  *
@@ -156,24 +141,15 @@ public class ListaCarros {
         System.out.print("Su deuda es de "+montoPagar);
         HacerPago(montoPagar);        
     }
-    public void HacerPago(int deuda){        
-        SolicitarDinero dineros=new SolicitarDinero(deuda);
-//        dineros.dineroE();
-//        int dinero=dineros.dineroL();
-//        HacerPago(deuda,dinero);
+    public void HacerPago(final int deuda){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SolicitarDinero().setVisible(true);
+                SolicitarDinero dinero=new SolicitarDinero();
+                dinero.setDeuda(deuda);
+            }
+        });
     }
-    //Funcion que realiza el pago del parqueo
-    public void HacerPago(int deuda, int dinero){
-        int vuelto=0 ;
-        if(dinero>=deuda){
-            vuelto = dinero-deuda;
-            caja.agregarDinero(deuda);
-            System.out.print("Cancelado su vuelto es de : "+vuelto+" \n");
-        }else{
-            System.out.print("Dinero insuficiente");
-        }
-        JOptionPane.showMessageDialog(null,"El vuelto es de "+vuelto);
-    }    
     //realiza el calculo de cuanto se paga por la cantidad de minutos
     public int  cobrarMinutos(int minutos){
         int precio = 0;

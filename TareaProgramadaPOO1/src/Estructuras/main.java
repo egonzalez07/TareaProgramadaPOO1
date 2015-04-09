@@ -6,17 +6,17 @@
 package Estructuras;
 
 import Clases.Caja;
-import org.jespxml.JespXML;
 
 /**
  *
  * @author Alcides
  */
+
 public class main {
-    public static void main(String args[]) {
-        Caja caja=new Caja(10000);
-        ListaCarros lista=new ListaCarros(10,1500,caja);
-        lista.ingresoVehiculo(21,52,"Toyota","958741");
-        lista.sacar("958741",22,00);
-    }
+     public static void main(String args[]) {
+         Caja caja=new Caja(10000);
+         ListaCarros lista=new ListaCarros(10,1500,caja);
+         lista.ingresoVehiculo(9, 30, "Toyota", "979887");
+         lista.sacar("979887", 11,30);
+     }
 }

@@ -289,6 +289,7 @@ public class Parametros extends javax.swing.JFrame{
                 IngresaVehiculo.jLabel12.setText((String) jComboBox2.getSelectedItem());
                 IngresaVehiculo.jLabel13.setText((String) jComboBox1.getSelectedItem());
                 IngresaVehiculo.jLabel15.setIcon(new ImageIcon("C:\\Users\\Elka\\Documents\\NetBeansProjects\\TareaProgramadaPOO1\\TareaProgramadaPOO1\\"+jTextField3.getText()));
+                
                 this.dispose();
                  
             }else{JOptionPane.showMessageDialog(null,"Deben estar todos los espacios llenos");}
